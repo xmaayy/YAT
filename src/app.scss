@@ -1,0 +1,23 @@
+:root {
+	font-family: "DM Sans";
+	--font-mono: 'Fira Mono', monospace;
+	--pure-white: #ffffff;
+    --primary-orange: #f9784b;
+    --selected-orange: #faa180;
+    --primary-blue: #3bb7e8;
+    --selected-blue: #77c5e4;
+    --primary-yellow: #fdc111;
+	--text-color: #000000;
+	--border-color: #000000;
+	--selected-border: #333333;
+	--column-width: 42rem;
+	--column-margin-top: 4rem;
+}
+a {
+    color: var(--text-color);
+    border: none;
+    text-decoration: none;
+}
+::-webkit-scrollbar {
+    display: none;
+}
