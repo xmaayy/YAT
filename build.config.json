@@ -1,6 +1,15 @@
 {
 	"appId": "com.whoelsebutme.app",
 	"productName": "YAT",
+	"mac":{
+		"hardenedRuntime": true,
+		"entitlements": "build/entitlements.mac.plist",
+		"entitlementsInherit": "build/entitlements.mac.plist",
+		"gatekeeperAssess": false
+	},
+	"dmg": {
+		"sign": false
+	  },
 	"directories": {
 		"output": "dist"
 	},
@@ -10,5 +19,6 @@
 			"from": "build",
 			"to": ""
 		}
-	]
+	],
+	"afterSign": "scripts/notarize.cjs"
 }

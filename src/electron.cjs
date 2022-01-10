@@ -8,10 +8,14 @@ const { ipcMain } = require('electron');
 //const { Store, History} = require(path.join(__dirname, "lib/serverside/basic_db.cjs"));
 const fs = require('fs');
 
+
+const userDataPath = path.join(app.getPath('home'), ".YAT");
 class Logger {
 	constructor() {
-		const userDataPath = (electron.app || electron.remote.app).getPath('userData');
-    	this.path = path.join(userDataPath, 'YAT_Logs.json');
+		this.path = path.join(userDataPath, 'YAT_Logs.jsonl');
+		if (!fs.existsSync(userDataPath)){
+			fs.mkdirSync(userDataPath, { recursive: true });
+		}
 	}
 
 	log(message) {
@@ -53,8 +57,10 @@ class Store {
 */
 class History {
   constructor(opts) {
-    const userDataPath = (electron.app || electron.remote.app).getPath('userData');
-    this.path = path.join(userDataPath, opts.configName + '.json');
+    this.path = path.join(userDataPath, 'YAT_Sessions.jsonl');
+	if (!fs.existsSync(userDataPath)){
+		fs.mkdirSync(userDataPath, { recursive: true });
+	}
     this.data = this.parseDataFile([]);
     console.log("Data" + this.data)
     console.log(this.data)
@@ -183,16 +189,6 @@ function createWindow() {
 		height: windowState.height,
 	});
 
-	mainWindow.webContents.executeJavaScript(`
-		var path = require('path');
-		module.paths.push(path.resolve('node_modules'));
-		module.paths.push(path.resolve('../node_modules'));
-		module.paths.push(path.resolve(__dirname, '..', '..', 'electron', 'node_modules'));
-		module.paths.push(path.resolve(__dirname, '..', '..', 'electron.asar', 'node_modules'));
-		module.paths.push(path.resolve(__dirname, '..', '..', 'app', 'node_modules'));
-		module.paths.push(path.resolve(__dirname, '..', '..', 'app.asar', 'node_modules'));
-		path = undefined;
-	`);
 
 	windowState.manage(mainWindow);
 
@@ -212,6 +208,7 @@ function createWindow() {
 let tray = null
 let trayMenu = null;
 app.whenReady().then(() => {
+	/*
 	tray = new Tray(path.join(__dirname, '..', 'static', 'chemical.png'))
 	trayMenu = Menu.buildFromTemplate([
 		{ label: 'Start a Timer', type: 'radio' },
@@ -219,7 +216,7 @@ app.whenReady().then(() => {
 	])
 	tray.setToolTip('Yet Another Timer')
 	tray.setContextMenu(trayMenu)
-
+	*/
 })
 
 ipcMain.on("get_num_sessions", (event, arcg) => {
@@ -232,7 +229,7 @@ ipcMain.on("get_num_sessions", (event, arcg) => {
 
 ipcMain.on("ready", (event, arcg) => {
 	logger.log("Returning sessions")
-	event.returnValue = "ready";
+	event.returnValue = userDataPath;
 })
 
 ipcMain.on("get_heatmap", (event, arcg) => {

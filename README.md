@@ -15,3 +15,6 @@ Built from the minimal [Sveltekit](https://github.com/sveltejs/kit#readme) + [El
 
 
 <br />
+
+### Building Help
+https://kilianvalkhof.com/2019/electron/notarizing-your-electron-application/
