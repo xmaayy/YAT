@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { timer } from '$lib/utils/timer-store';
+	import { timer, save_state } from '$lib/utils/timer-store';
 	import { settings } from '$lib/utils/user-settings.js';
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
 	const { ipcRenderer } = require('electron');
 
@@ -94,9 +94,15 @@
 
 	onMount(() => {
 		if ($timer.started) {
-			timer_id = setInterval(updateFn, 500);
 			showbutton = false;
+			delta = $save_state.delta;
+			accumulator = $save_state.accumulator;
+			timer_id = setInterval(updateFn, 500);
 		}
+	});
+	onDestroy(() => {
+		clearInterval(timer_id!);
+		save_state.set({ delta: delta, accumulator: accumulator });
 	});
 </script>
 
