@@ -13,7 +13,8 @@
 		"build": "cross-env NODE_ENV=production npm run build:svelte && npm run build:electron",
 		"build:svelte": "svelte-kit build",
 		"build:electron": "electron-builder -mwl --x64 --config build.config.json",
-		"start": "svelte-kit start"
+		"start": "svelte-kit preview",
+		"preview": "electron-builder start"
 	},
 	"browserslist": [
 		"Chrome 89"

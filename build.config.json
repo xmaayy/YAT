@@ -1,6 +1,6 @@
 {
-	"appId": "com.example.app",
-	"productName": "Svelte Electron",
+	"appId": "com.whoelsebutme.app",
+	"productName": "YAT",
 	"directories": {
 		"output": "dist"
 	},

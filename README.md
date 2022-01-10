@@ -1,16 +1,11 @@
-<p align="center">
-  <img src="static/sveltekit-electron.svg" />
-</p>
 
-# Sveltekit + Electron
+# Yet Another Timer
 
-Minimal [Sveltekit](https://github.com/sveltejs/kit#readme) + [Electron](https://www.electronjs.org/) starter template.
+Built from the minimal [Sveltekit](https://github.com/sveltejs/kit#readme) + [Electron](https://www.electronjs.org/) starter template, this is a pomo timer for myself to track when I do the most work, and how much work I do :) 
 
 <br />
 
-## Getting Started
-> *Feel free to substitute `npm` with `pnpm` or `yarn`.
-
+## Running this application
 |         |                                             |
 | ------- | ------------------------------------------- |
 | Clone   | · `npx degit fractalhq/sveltekit-electron ` |
@@ -20,11 +15,3 @@ Minimal [Sveltekit](https://github.com/sveltejs/kit#readme) + [Electron](https:/
 
 
 <br />
-
-<p align="center">
-  <img src="screenshot.png" />
-</p>
-
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Svelte for VSCode](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode)
