@@ -1,6 +1,7 @@
 <script lang="ts">
 	export let dir: string;
 	import { createEventDispatcher } from 'svelte';
+	import { fade } from 'svelte/transition';
 
 	const dispatch = createEventDispatcher();
 </script>
@@ -8,6 +9,7 @@
 <div
 	class="circle {dir === 'left' ? 'left' : 'right'}"
 	on:click={() => dispatch('click', dir + ' clicked')}
+	transition:fade|local={{ duration: 250 }}
 >
 	{#if dir === 'left'}
 		{'<'}

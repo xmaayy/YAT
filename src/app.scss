@@ -1,3 +1,13 @@
+
+@font-face {
+    font-family: 'DM Sans';
+    src: url('/DMSans-Regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Space Mono';
+    src: url('/SpaceMono-Regular.ttf') format('truetype');
+}
+
 :root {
 	font-family: "DM Sans";
 	--font-mono: 'Fira Mono', monospace;

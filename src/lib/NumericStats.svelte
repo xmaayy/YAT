@@ -48,7 +48,6 @@
 		const obj = await import('apexcharts');
 		total_minutes = ipcRenderer.sendSync('get_total', 'Thing');
 		let gd: object = ipcRenderer.sendSync('get_graph', 'Thing');
-		console.log(gd);
 		options.xaxis.categories = gd.xaxis;
 		options.series[0].data = gd.yaxis;
 		const ApexCharts = obj.default;

@@ -18,3 +18,8 @@ Built from the minimal [Sveltekit](https://github.com/sveltejs/kit#readme) + [El
 
 ### Building Help
 https://kilianvalkhof.com/2019/electron/notarizing-your-electron-application/
+You're gonna need to disable this `export CSC_IDENTITY_AUTO_DISCOVERY=true`
+
+### License Stuff
+Ding (bell sounds effect) - Mixkit free
+https://assets.mixkit.co/sfx/preview/mixkit-discrete-door-bell-announcement-225.mp3

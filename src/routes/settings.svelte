@@ -1,17 +1,7 @@
 <script lang="ts">
 	import { settings } from '$lib/utils/user-settings.js';
-
-	// The old transition
-	/*
-	transition:fly={{
-			delay: 0,
-			duration: 300,
-			x: 500,
-			opacity: 0.5,
-			easing: quintOut,
-		}}
-	*/
-
+	import { onDestroy, onMount } from 'svelte';
+	const { ipcRenderer } = require('electron');
 	let tmp = $settings;
 	function settingUpdated(e) {
 		console.log(e.target.value);
@@ -19,6 +9,16 @@
 		settings.set(tmp);
 		console.log($settings);
 	}
+
+	onMount(() => {
+		let rmt_settings = ipcRenderer.sendSync('load_settings', '');
+		let tmp_settings = $settings;
+		Object.keys(rmt_settings).forEach((k) => (tmp_settings[k] = rmt_settings[k]));
+		settings.set(tmp_settings);
+	});
+	onDestroy(() => {
+		ipcRenderer.send('save_settings', $settings);
+	});
 </script>
 
 <a href="/" class="timer-icon">✕</a>
@@ -43,6 +43,14 @@
 					type="text"
 					id="break_time"
 					value={$settings.break_time}
+					on:input={settingUpdated}
+				/>
+			</div>
+			<div>
+				Long Break Duration (mins): <input
+					type="text"
+					id="long_break_time"
+					value={$settings.long_break_time}
 					on:input={settingUpdated}
 				/>
 			</div>

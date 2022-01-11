@@ -3,6 +3,9 @@
 	import PageButton from '$lib/PageButton.svelte';
 	import NumericStats from '$lib/ProductiveHeatmap.svelte';
 	import ProductiveHeatmap from '$lib/NumericStats.svelte';
+	import { settings } from '$lib/utils/user-settings.js';
+	import { timer, save_state } from '$lib/utils/timer-store';
+	import { fade } from 'svelte/transition';
 
 	const { ipcRenderer } = require('electron');
 	import { onMount } from 'svelte';
@@ -27,12 +30,19 @@
 	onMount(() => {
 		console.log('Contacting main...');
 		console.log(ipcRenderer.sendSync('ready', 'Thing'));
+		let rmt_settings = ipcRenderer.sendSync('load_settings', '');
+		let tmp_settings = $settings;
+		Object.keys(rmt_settings).forEach((k) => (tmp_settings[k] = rmt_settings[k]));
+		settings.set(tmp_settings);
+		console.log($settings);
 	});
 </script>
 
-<a href="/settings" class="settings-icon">⚙</a>
-<PageButton dir="left" on:click={handle_left} />
-<PageButton dir="right" on:click={handle_right} />
+{#if !$timer.started}
+	<a transition:fade|local={{ duration: 250 }} href="/settings" class="settings-icon">⚙</a>
+	<PageButton dir="left" on:click={handle_left} />
+	<PageButton dir="right" on:click={handle_right} />
+{/if}
 <main>
 	<div class="main-area">
 		<h1>

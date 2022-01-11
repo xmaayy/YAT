@@ -8,7 +8,6 @@ const { ipcMain } = require('electron');
 //const { Store, History} = require(path.join(__dirname, "lib/serverside/basic_db.cjs"));
 const fs = require('fs');
 
-
 const userDataPath = path.join(app.getPath('home'), ".YAT");
 class Logger {
 	constructor() {
@@ -26,8 +25,7 @@ class Logger {
 
 class Store {
   constructor(opts) {
-    const userDataPath = (electron.app || electron.remote.app).getPath('userData');
-    this.path = path.join(userDataPath, opts.configName + '.json');
+    this.path = path.join(userDataPath, 'YAT_settings.json');
     this.data = this.parseDataFile(this.path, opts.defaults);
   }
   get(key) {
@@ -38,6 +36,11 @@ class Store {
     this.data[key] = val;
     // I'm not totally sure how to do progressive reads and writes
     // yet so for now we're going to be writing on every set
+    fs.writeFileSync(this.path, JSON.stringify(this.data));
+  }
+
+  update(object){
+	Object.keys(this.data).forEach(k => this.data[k] = object[k]);
     fs.writeFileSync(this.path, JSON.stringify(this.data));
   }
 
@@ -155,6 +158,7 @@ let history = new History({
 	configName: 'session_history',
 });
 let logger = new Logger();
+let settings = new Store({defaults:{work_time: 15, break_time: 5, account:"TBD..."}});
 
 function createWindow() {
 	let windowState = windowStateManager({
@@ -217,6 +221,15 @@ app.whenReady().then(() => {
 	tray.setToolTip('Yet Another Timer')
 	tray.setContextMenu(trayMenu)
 	*/
+})
+
+ipcMain.on("save_settings", (event, arg) => {
+	settings.update(arg)
+	logger.log("Updated settings")
+})
+
+ipcMain.on("load_settings", (event, arg) => {
+	event.returnValue = settings.data;
 })
 
 ipcMain.on("get_num_sessions", (event, arcg) => {
